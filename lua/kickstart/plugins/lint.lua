@@ -6,10 +6,15 @@ return {
     config = function()
       local lint = require 'lint'
       lint.linters_by_ft = {
-        -- markdown = { 'markdownlint' },
+        markdown = { 'markdownlint' },
         cs = { 'solar-lint-language-server' },
         lua = { 'luacheck' },
       }
+
+      -- Add vim to list of globals to disable linting error
+      local luacheck_args = lint.linters.luacheck.args
+      luacheck_args[#luacheck_args + 1] = '--globals'
+      luacheck_args[#luacheck_args + 1] = 'vim'
 
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
       -- instead set linters_by_ft like this:
